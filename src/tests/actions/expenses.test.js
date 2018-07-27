@@ -1,5 +1,4 @@
 import {addExpense, editExpense, removeExpense} from '../../actions/expenses';
-import {isExportDeclaration} from 'typescript';
 
 test('should setup remove expense action object', () => {
     const action = removeExpense('123abc');
