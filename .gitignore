@@ -5,3 +5,5 @@ node_modules/
 .vscode
 .idea
 public/dist
+.env.development
+.env.test
