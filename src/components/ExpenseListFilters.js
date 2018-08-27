@@ -5,7 +5,7 @@ import { setEndDate, setStartDate, setTextFilter, sortByAmount, sortByDate } fro
 
 export class ExpenseListFilters extends React.Component {
   state = {
-    calenderFocused: null
+    calendarFocused: null
   };
   onDatesChange = ({startDate, endDate}) => {
     this
@@ -15,8 +15,8 @@ export class ExpenseListFilters extends React.Component {
       .props
       .setEndDate(endDate);
   };
-  onFocusChange = (calenderFocused) => {
-    this.setState(() => ({calenderFocused}));
+  onFocusChange = (calendarFocused) => {
+    this.setState(() => ({calendarFocused}));
   };
   onSortChange = (e) => {
     if (e.target.value === 'amount') {
@@ -62,7 +62,7 @@ export class ExpenseListFilters extends React.Component {
               startDate={this.props.filters.startDate}
               endDate={this.props.filters.endDate}
               onDatesChange={this.onDatesChange}
-              focusedInput={this.state.calenderFocused}
+              focusedInput={this.state.calendarFocused}
               onFocusChange={this.onFocusChange}
               numberOfMonths={1}
               isOutsideRange={() => false}

@@ -1,8 +1,8 @@
+import { Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/initialize';
-import{ withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 //
@@ -101,75 +101,130 @@ import * as Yup from 'yup';
 //   }
 // }
 
-  const onFocusChange = ({focused}) => {
+class ExpenseForm extends Component {
+  state = {
+    calendarFocused: null
+  };
+
+  onFocusChange = ({focused}) => {
     this.setState(() => ({calendarFocused: focused}));
   };
 
-const ExpenseForm = ({ values,
-                       errors,
-                       touched,
-                       isSubmitting}) => (
-                         <div>
+  render () {
 
-                           <Form className="form">
-                             {touched.description && errors.description && <p className="form__error">{errors.description}</p>}
+    return (
+      <div>
+        <Formik
+          validationSchema={Yup.object().shape({
+            description: Yup.string().required('Please enter a description'),
+            amount: Yup.string().required('Please enter an amount').matches(/^\d{1,}(\.\d{0,2})?$/, 'Please enter a valid number')
+          })}
+          initialValues={{
+            description: this.props.expense ? this.props.expense.description : '',
+            amount: this.props.expense ? this.props.expense.amount / 100 : '',
+            note: this.props.expense ?this.props.expense.note : '',
+            createdAt: this.props.expense ? moment(this.props.expense.createdAt) : moment(),
+          }}
+          onSubmit={(values, {setFieldError, setSubmitting}) => {
+            if (!values.description) {
+              this.setState(() => {
+                setFieldError('description', 'Please enter a description');
+              });
 
-                             <Field type="text" name="description" autoFocus className="text-input"/>
-                             {touched.amount && errors.amount && <p className="form__error">{errors.amount}</p>}
+            } else {
 
-                             <Field type="text" name="amount" className="text-input"/>
-                                    <SingleDatePicker
-                                      date={this.state.createdAt}
-                                      onDateChange={handleChange}
-                                      focused={this.state.calendarFocused}
-                                      onFocusChange={onFocusChange}
-                                      numberOfMonths={1}
-                                      isOutsideRange={(day) => false}
-                                      block={true}
-                                    />
-                           <Field type="textarea" name="note" autoFocus className="text-input" />
+              this.props.onSubmit({
+                description: values.description,
+                amount: parseFloat(values.amount, 10) * 100,
+                createdAt: values.createdAt.valueOf(),
+                note: values.note
+              });
+            }
 
-                             <button disabled={isSubmitting} type="submit" className="button">Save Expense</button>
+            setSubmitting(false);
+          }}
+          render = {({values, touched, errors, dirty, isSubmitting, handleChange})  => (
+          <Form className="form">
+            {touched.description && errors.description && <p className="form__error">{errors.description}</p>}
+
+            <Field
+              type="text"
+              name="description"
+              autoFocus
+              className="text-input"
+              placeholder="Description"
+            />
+            {touched.amount && errors.amount && <p className="form__error">{errors.amount}</p>}
+
+            <Field
+              type="text"
+              name="amount"
+              className="text-input"
+              placeholder="Amount"
+            />
+            <SingleDatePicker
+              date={values.createdAt}
+              onDateChange={handleChange}
+              focused={this.state.calendarFocused}
+              onFocusChange={this.onFocusChange}
+              numberOfMonths={1}
+              isOutsideRange={() => false}
+              block={true}
+            />
+            <Field
+              type="textarea"
+              name="note"
+              className="text-input"
+              placeholder="Add a note for your expense (optional)"
+            />
+
+            <button disabled={isSubmitting} type="submit" className="button">Save Expense</button>
 
 
-                         </Form>
-                         </div>
+          </Form>
+          )}
+        >
 
-)
-const FormikExpenseForm = withFormik({
-mapPropsToValues({ description, amount, note, createdAt}) {
-  return {
-    description: description || '',
-    amount: amount ? amount / 100 :0,
-    note: note || '',
-    createdAt: createdAt ? moment(moment) : moment(),
+        </Formik>
+      </div>
+
+    );
   }
-},
-  validationSchema: Yup.object().shape({
-    description: Yup.string().required("Please enter a description"),
-    amount: Yup.string().required("Please enter an amount").matches(/^\d{1,}(\.\d{0,2})?$/,"Please enter a valid number"),
-  }),
-  handleSubmit(values , {setFieldError, setSubmitting}) {
-    if (!values.description) {
-      this.setState(() => {
-        setFieldError("description", 'Please enter a description')
-    });
+}
 
-    } else {
+// const FormikExpenseForm = withFormik({
+// mapPropsToValues({ description, amount, note, createdAt}) {
+//   return {
+//     description: description || '',
+//     amount: amount ? amount / 100 :0,
+//     note: note || '',
+//     createdAt: createdAt ? moment(moment) : moment(),
+//   }
+// },
+//   validationSchema: Yup.object().shape({
+//     description: Yup.string().required("Please enter a description"),
+//     amount: Yup.string().required("Please enter an amount").matches(/^\d{1,}(\.\d{0,2})?$/,"Please enter a valid number"),
+//   }),
+//   handleSubmit(values , {setFieldError, setSubmitting}) {
+//     if (!values.description) {
+//       this.setState(() => {
+//         setFieldError("description", 'Please enter a description')
+//     });
+//
+//     } else {
+//
+//       this.props.onSubmit({
+//         description: values.description,
+//         amount: parseFloat(values.amount, 10) * 100,
+//         createdAt: values.createdAt.valueOf(),
+//         note: values.note
+//       });
+//     }
+//
+//     setSubmitting(false)
+//   }
+//
+//
+// })(ExpenseForm);
 
-      this.props.onSubmit({
-        description: values.description,
-        amount: parseFloat(values.amount, 10) * 100,
-        createdAt: values.createdAt.valueOf(),
-        note: values.note
-      });
-    }
-
-    setSubmitting(false)
-  }
-
-
-})(ExpenseForm);
-
-
-export default FormikExpenseForm;
+export default ExpenseForm;
