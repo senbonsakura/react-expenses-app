@@ -18,3 +18,11 @@
 .button--secondary {
   background: #888888;
 }
+
+.is-grouped {
+  display: inline-block;
+}
+
+.is-grouped > .button:not(:last-child) {
+  margin-right: 10px;
+}

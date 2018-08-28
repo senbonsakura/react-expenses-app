@@ -8,9 +8,11 @@ export const LoginPage = ({startLogin, startLoginFacebook}) => (
     <div className="box-layout__box">
       <h1 className="box-layout__title">Expensify App</h1>
       <p>Spend with control!</p>
-      <button className="button" onClick={startLogin}>Login with Google</button>
-      <button className="button" onClick={startLoginFacebook}>Login with Facebook</button>
-
+      <div className="is-grouped">
+        <p>Login with</p>
+      <button className="button" onClick={startLogin}>Google</button>
+      <button className="button" onClick={startLoginFacebook}>Facebook</button>
+      </div>
     </div>
 
   </div>
