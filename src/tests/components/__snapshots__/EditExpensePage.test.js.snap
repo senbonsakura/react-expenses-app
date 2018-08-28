@@ -32,10 +32,14 @@ exports[`should render EditExpensePage correctly 1`] = `
     />
     <button
       className="button button--secondary"
-      onClick={[Function]}
     >
       Remove Expense
     </button>
   </div>
+  <Connect(ReduxDialog)
+    className="modal"
+    handleRemoveExpense={[Function]}
+    onRequestClose={[Function]}
+  />
 </div>
 `;

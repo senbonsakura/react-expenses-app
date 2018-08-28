@@ -1,33 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { startEditExpense, startRemoveExpense } from '../actions/expenses';
-import RemoveModal from './EditExpenseRemoveModal';
+import RemoveModal from './Modal';
 import ExpenseForm from './ExpenseForm';
+import Modal from 'react-modal';
+import { closeDialog, openDialog } from 'redux-dialog';
+
+
 
 export class EditExpensePage extends React.Component {
-  state= {
-    isOpen: false
+  state = {
+    modalIsOpen: false
   };
 
   onSubmit = (expense) => {
     this.props.startEditExpense(this.props.expense.id, expense);
     this.props.history.push('/');
   };
-  onRemoveModal = () => {
-    this.setState(() => ({
-      isOpen: true
-    }));
-  };
+
   onCloseModal = () => {
-    this.setState(() => ({
-      isOpen: false
-    }));
+    this.props.startCloseModal();
   };
 
   onRemove = () => {
     this.props.startRemoveExpense({id: this.props.expense.id});
     this.props.history.push('/');
   };
+
+  componentWillMount() {
+    Modal.setAppElement('body');
+  }
 
   render () {
     return (
@@ -40,12 +42,15 @@ export class EditExpensePage extends React.Component {
         </div>
         <div className="content-container">
           <ExpenseForm expense={this.props.expense} onSubmit={this.onSubmit}/>
-          <button className="button button--secondary" onClick={this.onRemoveModal}>
-
+          <button className="button button--secondary" onClick={this.props.startOpenModal}>
             Remove Expense
-            <RemoveModal handleRemoveExpense={this.onRemove} isOpen={this.state.isOpen} handleCloseModal={this.onCloseModal}/>
           </button>
         </div>
+        <RemoveModal
+          handleRemoveExpense={this.onRemove}
+          onRequestClose={this.onCloseModal}
+          className="modal"
+        />
       </div>
 
     );
@@ -61,7 +66,12 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
-  startRemoveExpense: (data) => dispatch(startRemoveExpense(data))
+  startRemoveExpense: (data) => dispatch(startRemoveExpense(data)),
+  startOpenModal: ()=> dispatch(openDialog("Remove Modal",{
+    title:"Are you sure to remove this expense?",
+  })),
+  startCloseModal: ()=> dispatch(closeDialog("Remove Modal")),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditExpensePage);

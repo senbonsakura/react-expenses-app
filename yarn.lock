@@ -6263,6 +6263,10 @@ redux-actions@^2.6.1:
     lodash.curry "^4.1.1"
     reduce-reducers "^0.1.0"
 
+redux-dialog@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/redux-dialog/-/redux-dialog-0.2.3.tgz#76aeeba347e6bad1e4dbc1678fdae37d65ab4e1d"
+
 redux-mock-store@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.5.3.tgz#1f10528949b7ce8056c2532624f7cafa98576c6d"
