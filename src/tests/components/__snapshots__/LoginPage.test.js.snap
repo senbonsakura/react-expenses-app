@@ -15,11 +15,23 @@ exports[`should render LoginPage correctly 1`] = `
     <p>
       Spend with control!
     </p>
-    <button
-      className="button"
+    <div
+      className="is-grouped"
     >
-      Login with Google
-    </button>
+      <p>
+        Login with
+      </p>
+      <button
+        className="button"
+      >
+        Google
+      </button>
+      <button
+        className="button"
+      >
+        Facebook
+      </button>
+    </div>
   </div>
 </div>
 `;

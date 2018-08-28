@@ -20,3 +20,29 @@
   justify-content: space-between;
   padding: $s-size 0;
 }
+
+.header--username {
+  text-decoration: none;
+  font-size: $font-size-large;
+  color: white;
+
+
+}
+.header--avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}

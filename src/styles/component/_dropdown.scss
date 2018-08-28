@@ -1,0 +1,24 @@
+.dropdown__container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.dropdown {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dropdown__content {
+  display: none;
+  position: absolute;
+}
+
+.dropdown--active .dropdown__content {
+  display: block;
+}
+
+.dropdown__trigger {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}

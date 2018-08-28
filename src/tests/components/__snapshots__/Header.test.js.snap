@@ -19,12 +19,38 @@ exports[`should render Header correctly 1`] = `
           Expensify
         </h1>
       </Link>
-      <button
-        className="button button--link"
-        onClick={[Function]}
+      <div
+        className="dropdown__container"
       >
-        Logout
-      </button>
+        <Dropdown
+          className=""
+        >
+          <DropdownTrigger
+            className=""
+          >
+            <img
+              className="header--avatar"
+              src="undefined"
+            />
+            <span
+              className="header--username"
+            />
+            <i
+              className="down"
+            />
+          </DropdownTrigger>
+          <DropdownContent
+            className=""
+          >
+            <button
+              className="button buton--menu"
+              onClick={[Function]}
+            >
+              Logout
+            </button>
+          </DropdownContent>
+        </Dropdown>
+      </div>
     </div>
   </div>
 </header>
