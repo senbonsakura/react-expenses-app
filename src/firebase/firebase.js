@@ -7,14 +7,15 @@ const config = {
   projectId: process.env.FIREBASE_PROJECT_ID,
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
-}
+};
 
-firebase.initializeApp(config)
-const database = firebase.database()
+firebase.initializeApp(config);
+const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
 
 
-export { firebase, googleAuthProvider, database as default };
+export { firebase, googleAuthProvider, facebookAuthProvider, database as default };
 
 // const onValueChanged = (snapshot) => {
 //   const expenses = [];

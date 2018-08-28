@@ -5,6 +5,7 @@
 }
 
 .page-header__title {
+  text-overflow:ellipsis;
   font-weight: 300;
   margin: 0;
   span {
